@@ -1,10 +1,12 @@
 # AI-Enhanced Resume Builder 📄✨
 
-Hey there! This is my cool project that uses AI to make your resume awesome! 🚀
+Web app that which accepts resume and provides suggestions for improvement
 
-AI Pair Programmer - Github Copilot
+### Home Page
+![Home Page](images/home_page.png)
 
-Youtube Video - https://www.youtube.com/watch?v=92L0uh9xw2c
+### Results Page
+![Results Page](images/results.png)
 
 ## What it does
 
@@ -31,7 +33,7 @@ This app takes your resume, reads it with AI magic, and then:
 
 ```python app.py```
 
-4. Open your browser and go to `http://localhost:5000`
+4. Open your browser and go to `http://localhost:5001`
 5. Upload your resume and see the magic happen!
 
 ## What you need
@@ -41,24 +43,42 @@ This app takes your resume, reads it with AI magic, and then:
 - google-generativeai
 - Some other stuff (check `requirements.txt`)
 
-## How it works
+## Docker commands execution
 
-1. You upload your resume
-2. Our AI friend (thanks, Google Gemini!) reads it
-3. The AI thinks really hard about your resume
-4. It tells you how to improve and gives you a score
+### Docker build
 
-## Known issues
+Command used - `docker build -t resume-builder .`
 
-- Sometimes the AI gets confused by weird formats 🙃
-- It might give strange advice for very specific jobs
+![Docker build](images/Docker%20build.png)
 
-## Future plans
+### Docker run
 
-I want to make it even cooler by:
-- Adding support for more file types
-- Making the suggestions more specific
-- Adding a feature to edit your resume right in the app
+Command use - `docker run -p 5001:5001 resume-builder`
 
+![Docker run](images/Docker%20run.png)
+
+### Docker push (Push image to docker hub)
+
+Command used - `docker push <_username>/<_imagename>`
+
+![Docker push](images/Docker%20push.png)
+
+### Unit tests using pytest (Non container)
+
+Unit tests execution using pytest (Outside container)
+
+![Docker compose build](images/Pytest%20execution.png)
+
+### Docker compose build
+
+Created a docker compose file to collectively build the app source code and run the unit tests parallely in separate containers.
+
+![Docker compose build](images/Docker%20compose%20build.png)
+
+### Docker compose up (Runs test in container)
+
+This command starts the container for both the images, thus runs the unit tests and starts the web app.
+
+![Docker compose up](images/Docker%20compose%20up.png)
 
 Made with 💖 by Puneet Bajaj
