@@ -1,0 +1,49 @@
+# Vagrantfile
+
+Vagrant.configure("2") do |config|
+    # Use Ubuntu 20.04 as the base box
+    config.vm.box = "bento/ubuntu-20.04"
+  
+    # Assign a name to the VM
+    config.vm.hostname = "resume-builder"
+  
+    # Forward port 8080 on the host to port 80 on the guest
+    config.vm.network "forwarded_port", guest: 5001, host: 5002
+  
+    # Provision the VM with necessary dependencies
+    config.vm.provision "shell", inline: <<-SHELL
+      # Update package list and install dependencies
+      sudo apt-get update
+      # sudo apt-get install -y python3.12 python3-pip
+  
+      # Create a virtual environment with Python 3.12
+      # python3 -m venv /home/vagrant/venv
+
+      # Activate the virtual environment
+      source /home/vagrant/venv/bin/activate
+
+      # Upgrade pip
+      pip install --upgrade pip
+  
+      # Navigate to the app directory (assuming /vagrant is synced with the host)
+      cd /vagrant
+  
+      # Install any additional Python dependencies listed in requirements.txt
+      if [ -f requirements.txt ]; then
+        sudo pip3 install -r requirements.txt
+      fi
+  
+      # Run the Flask application (assuming app.py is the entry point)
+      FLASK_APP=app.py flask run --host=0.0.0.0 --port=5001
+    SHELL
+  
+    # Sync the current directory with /vagrant in the VM
+    config.vm.synced_folder ".", "/vagrant"
+  
+    # Specify VMWare Fusion as the provider
+    config.vm.provider "vmware_fusion" do |v|
+      v.memory = 1024
+      v.cpus = 2
+      # v.gui = true
+    end
+  end

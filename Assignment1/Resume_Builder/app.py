@@ -4,10 +4,16 @@ from dotenv import load_dotenv
 import os
 import PyPDF2
 from docx import Document
+from memory_profiler import profile
+import threading
+import gc
+import time
+import logging
 
 load_dotenv()
 
 app = Flask(__name__)
+logging.basicConfig(level=logging.DEBUG)
 
 # Configure the Gemini AI API
 genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
@@ -39,6 +45,7 @@ def extract_resume_text(file):
         raise ValueError('Unsupported file format')
 
 @app.route('/', methods=['GET', 'POST'])
+@profile
 def index():
     if request.method == 'POST':
         # Handle file upload
@@ -98,5 +105,21 @@ def index():
 
     return render_template('index.html')
 
+def log_gc_stats():
+    while True:
+        gc_stats = gc.get_stats()
+        print(f"GC stats: {gc_stats}")
+        time.sleep(1)  # Log GC stats every 60 seconds
+
 if __name__ == '__main__':
+    start_time = time.time()
+    print(f"Application starting...")
+
+    gc_thread = threading.Thread(target=log_gc_stats, daemon=True)
+    gc_thread.start()
+
     app.run()
+
+    end_time = time.time()
+    startup_time = end_time - start_time
+    print(f"Application startup time: #{startup_time} seconds")
