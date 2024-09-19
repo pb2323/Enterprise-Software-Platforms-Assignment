@@ -1,6 +1,8 @@
 # AI-Enhanced Resume Builder 📄✨
 
-Web app that which accepts resume and provides suggestions for improvement
+Web app that which accepts resume and provides suggestions for improvement.
+
+Detailed comparison about the differences between parameters when this app is hosted in Docker vs Virtual Machine (VMWare Fusion) [https://docs.google.com/document/d/10S9jmPK16Pbau2It-Z-6X36o4WL_pL-QwXXx29pnH14/edit#heading=h.e9q77z7jpgmf](https://docs.google.com/document/d/10S9jmPK16Pbau2It-Z-6X36o4WL_pL-QwXXx29pnH14/edit#heading=h.e9q77z7jpgmf)
 
 ### Home Page
 ![Home Page](images/home_page.png)
