@@ -65,12 +65,11 @@ Initially, the application was deployed as a single unit in a Kubernetes cluster
    ```
    kubectl get pods
    kubectl get services
-   kubectl get ingress
    ```
 
 7. Access the application:
    ```
-   minikube service frontend-service
+   minikube service resume-builder
    ```
 
 ## Technologies Used
