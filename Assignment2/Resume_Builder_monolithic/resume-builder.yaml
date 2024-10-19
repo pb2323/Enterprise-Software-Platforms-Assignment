@@ -15,8 +15,8 @@ spec:
         app: resume-builder
     spec:
       containers:
-      - name: resume-builder
-        image: resume-builder:latest
+      - name: resume-builder-5008
+        image: resume-builder-5008:latest
         imagePullPolicy: Never
         ports:
         - containerPort: 5001

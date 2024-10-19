@@ -5,33 +5,6 @@
 The Resume Analyzer is a Kubernetes-based application that processes resumes in PDF and DOC/DOCX formats, providing analysis and improvement suggestions using the Gemini AI API. This project demonstrates the transition from a monolithic architecture to a microservices architecture, showcasing scalability and maintainability improvements.
 
 ## Architecture
-
-### Monolithic Architecture
-
-Initially, the application was deployed as a single unit in a Kubernetes cluster:
-
-```
-+----------------------------------+
-|           Kubernetes             |
-|  +----------------------------+  |
-|  |    Resume Analyzer Pod     |  |
-|  |  +----------------------+  |  |
-|  |  |   Flask Application  |  |  |
-|  |  |   - PDF Processing   |  |  |
-|  |  |   - DOC Processing   |  |  |
-|  |  |   - Text Analysis    |  |  |
-|  |  +----------------------+  |  |
-|  |           |  ^             |  |
-|  +-----------|--|-------------+  |
-|              |  |                |
-+--------------|--|----------------+
-               |  |
-               v  |
-        +----------------+
-        |     User       |
-        +----------------+
-```
-
 ### Microservices Architecture
 
 The application was then refactored into a microservices architecture:
@@ -88,14 +61,14 @@ The application was then refactored into a microservices architecture:
    docker build -t doc-service ./doc-service
    ```
 
-4. Create a secret for the Gemini API key:
+4. Apply Kubernetes secret configurations:
    ```
-   kubectl create secret generic gemini-api-secret --from-literal=api-key=your_api_key_here
+   kubectl apply -f resume-analyzer-secret.yaml
    ```
 
 5. Apply Kubernetes configurations:
    ```
-   kubectl apply -f kubernetes/
+   kubectl apply -f resume-analyzer.yaml
    ```
 
 6. Verify the deployments:
