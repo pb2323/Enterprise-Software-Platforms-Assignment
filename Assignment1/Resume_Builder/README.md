@@ -4,6 +4,10 @@ Web app that which accepts resume and provides suggestions for improvement.
 
 Detailed comparison about the differences between parameters when this app is hosted in Docker vs Virtual Machine (VMWare Fusion) [https://docs.google.com/document/d/10S9jmPK16Pbau2It-Z-6X36o4WL_pL-QwXXx29pnH14/edit#heading=h.e9q77z7jpgmf](https://docs.google.com/document/d/10S9jmPK16Pbau2It-Z-6X36o4WL_pL-QwXXx29pnH14/edit#heading=h.e9q77z7jpgmf)
 
+Serverless options comparison document - [https://docs.google.com/document/d/1cRCIpmR47sr1lAr8qa-4ZMvuxk4frwnvmQWaJuWXj8M/edit#heading=h.y2dxy1pxu1me](https://docs.google.com/document/d/1cRCIpmR47sr1lAr8qa-4ZMvuxk4frwnvmQWaJuWXj8M/edit#heading=h.y2dxy1pxu1me)
+
+Deep dived into AWS Lambda architecture
+
 ### Home Page
 ![Home Page](images/home_page.png)
 
