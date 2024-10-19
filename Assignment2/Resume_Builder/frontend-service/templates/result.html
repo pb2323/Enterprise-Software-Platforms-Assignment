@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Analysis Result</title>
+</head>
+<body>
+    <h1>Resume Analysis Result</h1>
+    <h2>Improvements:</h2>
+    <ul>
+    {% for improvement in analysis.improvements %}
+        <li>{{ improvement }}</li>
+    {% endfor %}
+    </ul>
+    <h2>Score: {{ analysis.score }}/10</h2>
+    <h2>Explanation:</h2>
+    <p>{{ analysis.explanation }}</p>
+    <a href="/">Analyze Another Resume</a>
+</body>
+</html>

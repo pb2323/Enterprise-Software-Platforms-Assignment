@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: resume-builder
+  labels:
+    app: resume-builder
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: resume-builder
+  template:
+    metadata:
+      labels:
+        app: resume-builder
+    spec:
+      containers:
+      - name: resume-builder
+        image: resume-builder:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 5001
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: resume-builder
+spec:
+  selector:
+    app: resume-builder
+  ports:
+    - protocol: TCP
+      port: 5002
+      targetPort: 5001
+      nodePort: 30001
+  type: LoadBalancer

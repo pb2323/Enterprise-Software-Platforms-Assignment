@@ -1,0 +1,139 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend-service
+  template:
+    metadata:
+      labels:
+        app: frontend-service
+    spec:
+      containers:
+      - name: frontend-service
+        image: frontend-service:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 5003
+        env:
+        - name: PDF_SERVICE_URL
+          value: "http://pdf-service/analyze"
+        - name: DOC_SERVICE_URL
+          value: "http://doc-service/analyze"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-service
+spec:
+  selector:
+    app: frontend-service
+  ports:
+  - port: 80
+    targetPort: 5003
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pdf-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pdf-service
+  template:
+    metadata:
+      labels:
+        app: pdf-service
+    spec:
+      containers:
+      - name: pdf-service
+        image: pdf-service:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 1234
+        env:
+        - name: GEMINI_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: gemini-api-secret
+              key: api-key
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: pdf-service
+spec:
+  selector:
+    app: pdf-service
+  ports:
+  - port: 80
+    targetPort: 1234
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: doc-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: doc-service
+  template:
+    metadata:
+      labels:
+        app: doc-service
+    spec:
+      containers:
+      - name: doc-service
+        image: doc-service:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 1235
+        env:
+        - name: GEMINI_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: gemini-api-secret
+              key: api-key
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: doc-service
+spec:
+  selector:
+    app: doc-service
+  ports:
+  - port: 80
+    targetPort: 1235
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: resume-analyzer-ingress
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /pdf(/|$)(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: pdf-service
+            port: 
+              number: 80
+      - path: /doc(/|$)(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: doc-service
+            port: 
+              number: 80
