@@ -1,4 +1,4 @@
-# AI-Enhanced Resume Builder 📄✨
+# Resume Feedback 📄✨
 
 Web app that which accepts resume and provides suggestions for improvement.
 
